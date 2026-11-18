@@ -1,0 +1,79 @@
+{
+  "at": "2026-11-18T20:15:23Z",
+  "timezoneNote": "timestamps are UTC; Europe/London is UTC+0 on 18 Nov 2026",
+  "rail": "x402",
+  "network": "eip155:11155111",
+  "diamond": "0x72a70e949362670Bf8bceAd24eFC5b8f950aa08b",
+  "diamondExplorer": "https://sepolia.etherscan.io/address/0x72a70e949362670Bf8bceAd24eFC5b8f950aa08b",
+  "usdc": "0xcc194e1a843B658526D0D5C431f670028582Ae17",
+  "usdcExplorer": "https://sepolia.etherscan.io/token/0xcc194e1a843B658526D0D5C431f670028582Ae17",
+  "payer": "0xC11FBCbE43baF505F37dD6B95054C5eB380A9965",
+  "payerExplorer": "https://sepolia.etherscan.io/address/0xC11FBCbE43baF505F37dD6B95054C5eB380A9965",
+  "faucet": {
+    "tx": "0xe3fb7c05a813d4fb1f20c2fc983885e2eca8b8fa083da0c002646f3fd0cef16b",
+    "blockNumber": "12163102",
+    "amountEth": "0.25",
+    "explorer": "https://sepolia.etherscan.io/tx/0xe3fb7c05a813d4fb1f20c2fc983885e2eca8b8fa083da0c002646f3fd0cef16b"
+  },
+  "mint": {
+    "tx": "0x8230b068ab9ab4ce180f7027d5bec83f242fc7dc0dfdb506a05ec6f6c5f4acb5",
+    "blockNumber": "12163110",
+    "status": 1,
+    "amountUsdc": "5",
+    "usdc": "0xcc194e1a843B658526D0D5C431f670028582Ae17",
+    "explorer": "https://sepolia.etherscan.io/tx/0x8230b068ab9ab4ce180f7027d5bec83f242fc7dc0dfdb506a05ec6f6c5f4acb5"
+  },
+  "failureCase": {
+    "payeeName": "Blocked Entity Example",
+    "decision": "deny",
+    "settled": false,
+    "reasons": [
+      "local_denylist"
+    ],
+    "skippedPurchase": true,
+    "intelligenceCostUsd": 0,
+    "vendorAmountUsdc": 0,
+    "telegraphCallsDuringDeny": 0,
+    "spentUsdDuringDeny": 0
+  },
+  "livePurchase": {
+    "intent": "SANCTIONS_SCREENING_MATCH_GENERAL",
+    "params": {
+      "name": "Circle Internet Financial"
+    },
+    "spendCapUsd": 0.05,
+    "intendedCostUsd": 0.01,
+    "decision": null,
+    "settled": false,
+    "cost_usd": 0,
+    "spentUsdc": "0",
+    "receipts": [],
+    "settlementTx": null,
+    "settlementExplorer": null,
+    "paymentVerifiedByFacilitator": true,
+    "facilitatorVerify": {
+      "url": "https://facilitator.x402.rs/verify",
+      "isValid": true,
+      "payer": "0xC11FBCbE43baF505F37dD6B95054C5eB380A9965"
+    },
+    "facilitatorSettle": {
+      "url": "https://facilitator.x402.rs/settle",
+      "engineError": "settlement failed: settle request failed: Post \"https://facilitator.x402.rs/settle\": context deadline exceeded",
+      "engineHint": "the payment was verified but could not be settled \u2014 this is usually the facilitator, not your signature. Retry; if it persists, report the reason above.",
+      "engineDeadlineMs": 30000,
+      "directSettleFromThisBox": "aborted after 180000ms with no HTTP body; no on-chain Transfer from the payer",
+      "outboundUsdcTransfersSinceMint": 0
+    },
+    "result": null,
+    "receipt": null
+  },
+  "balancesAfterAttempt": {
+    "address": "0xC11FBCbE43baF505F37dD6B95054C5eB380A9965",
+    "ethWei": "249999999997615342",
+    "usdc": "5",
+    "usdcRaw": "5000000",
+    "nonce": 1,
+    "headBlock": 12163728
+  },
+  "ledgerPath": "evidence/x402-ledger.json"
+}

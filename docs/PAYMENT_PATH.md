@@ -1,6 +1,6 @@
 # Payment path recommendation (H2 Apps & Agents)
 
-Written **Wed 18 Nov 2026, ~18:05 UK**. Official rules: `../RULES.md`. Live purchase is still waiting on Sepolia ETH (see Faucet status below).
+Updated **Wed 18 Nov 2026, evening UK**. Official rules: `../RULES.md`. Sepolia ETH and 5 test USDC are on the throwaway EOA (mint already confirmed). The live x402 signature verifies; official facilitator `/settle` is currently hanging, so no settlement tx yet (see README).
 
 ## Recommendation: **both**, with wallet-signed x402 as the judged purchase when it can be completed
 
@@ -79,3 +79,12 @@ Tried from the shell, no login, no mainnet ETH, no spend:
 - No Ethereum Sepolia ETH was found on the throwaway EOA or on other box addresses checked read-only (qday deployer, biq-payer, frantic-payout, Ali's Phantom payout, steward deployer). The steward deployer still holds only ~0.0000936 ETH on **Base** Sepolia, which cannot pay Ethereum Sepolia gas. No funds were moved.
 
 **Browser unblocker for the parent:** open [https://www.sepolia-faucet.pk910.de/](https://www.sepolia-faucet.pk910.de/), paste `0xC11FBCbE43baF505F37dD6B95054C5eB380A9965`, complete the captcha, mine a small amount, and claim. A few times 0.001 ETH is enough to mint 5 test USDC. Then we can mint and run the capped x402 purchase without spending real money.
+
+
+## Faucet / mint / live settle (18 Nov 2026, evening UK)
+
+PoW faucet and mint are done. Do not remint.
+
+- Faucet 0.25 SepETH: [0xe3fb7c05…f16b](https://sepolia.etherscan.io/tx/0xe3fb7c05a813d4fb1f20c2fc983885e2eca8b8fa083da0c002646f3fd0cef16b), block 12163102
+- Mint 5 test USDC: [0x8230b068…acb5](https://sepolia.etherscan.io/tx/0x8230b068ab9ab4ce180f7027d5bec83f242fc7dc0dfdb506a05ec6f6c5f4acb5), block 12163110
+- EOA `0xC11FBCbE43baF505F37dD6B95054C5eB380A9965` still holds 5 USDC after verified-but-unsettled x402 attempts. `POST https://facilitator.x402.rs/verify` returns `isValid: true`. `POST https://facilitator.x402.rs/settle` did not return in 180s from this box, and the Telegraph engine hits a ~30s context deadline calling the same URL. No outbound USDC transfer was observed.

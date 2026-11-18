@@ -2,15 +2,34 @@ import { INTENTS } from "./intents.js";
 
 const BLOCKING_RISK = new Set(["HIGH", "CRITICAL"]);
 
+/** Payees denied locally, with no Telegraph purchase. Names are demo fixtures, not a real sanctions list. */
+export const LOCAL_DENYLIST = new Set(["blocked entity example"]);
+
+export function isLocallyDenied(name) {
+  return LOCAL_DENYLIST.has(String(name || "").trim().toLowerCase());
+}
+
 /**
  * Buy screening intelligence, then decide whether a proposed payment may settle.
  * The proof bundle is attached either way so the ledger can show blocked attempts.
  *
+ * A name on LOCAL_DENYLIST is denied before any purchase.
  * proposal.screens defaults to all three official pre-settle intents.
  * A capped live run may pass screens: ["sanctions"] to stay under $0.05.
  */
 export async function screenPayment(client, proposal) {
   const { payeeName, subject, transaction } = proposal;
+  if (isLocallyDenied(payeeName)) {
+    return {
+      allowed: false,
+      reasons: ["local_denylist"],
+      decision: "deny",
+      proof: {},
+      screeningCostUsd: 0,
+      skippedPurchase: true,
+    };
+  }
+
   const screens = proposal.screens || ["sanctions", "transactionRisk", "fraudRisk"];
   const proof = {};
   const asks = [];
@@ -62,5 +81,6 @@ export async function screenPayment(client, proposal) {
     decision: allowed ? "allow" : "deny",
     proof,
     screeningCostUsd,
+    skippedPurchase: false,
   };
 }

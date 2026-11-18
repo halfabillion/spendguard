@@ -1,0 +1,66 @@
+{
+  "entries": [
+    {
+      "id": "e-1",
+      "at": "2026-11-18T18:08:26.180Z",
+      "status": "blocked",
+      "category": "intelligence",
+      "task": "pre-settle-screen",
+      "payeeName": "Blocked Entity Example",
+      "amountUsdc": 0,
+      "intelligenceCostUsd": 0,
+      "reasons": [
+        "local_denylist"
+      ],
+      "proof": {},
+      "gas": null,
+      "quality": null,
+      "receipts": [],
+      "rail": null
+    },
+    {
+      "id": "e-2",
+      "at": "2026-11-18T20:05:58.129Z",
+      "status": "blocked",
+      "category": "intelligence",
+      "task": "pre-settle-screen",
+      "payeeName": "Blocked Entity Example",
+      "amountUsdc": 0,
+      "intelligenceCostUsd": 0,
+      "reasons": [
+        "local_denylist"
+      ],
+      "proof": {},
+      "gas": null,
+      "quality": null,
+      "receipts": [],
+      "rail": null
+    },
+    {
+      "id": "e-3",
+      "at": "2026-11-18T20:08:50.032Z",
+      "status": "blocked",
+      "category": "intelligence",
+      "task": "pre-settle-screen",
+      "payeeName": "Blocked Entity Example",
+      "amountUsdc": 0,
+      "intelligenceCostUsd": 0,
+      "reasons": [
+        "local_denylist"
+      ],
+      "proof": {},
+      "gas": null,
+      "quality": null,
+      "receipts": [],
+      "rail": null
+    }
+  ],
+  "summary": {
+    "settlementCount": 0,
+    "blockedCount": 3,
+    "entryCount": 3,
+    "burnByCategory": {},
+    "costPerTask": {},
+    "totalSettledUsd": 0
+  }
+}

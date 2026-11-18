@@ -1,7 +1,7 @@
-import { wrapFetchWithPaymentFromConfig } from "@x402/fetch";
+import { x402Client, x402HTTPClient } from "@x402/fetch";
 import { ExactEvmScheme } from "@x402/evm";
 import { privateKeyToAccount } from "viem/accounts";
-import { SEPOLIA_CAIP, SEPOLIA_USDC } from "./chain.js";
+import { SEPOLIA_CAIP, SEPOLIA_USDC, SEPOLIA_RPC } from "./chain.js";
 import { redact, safeError } from "./redact.js";
 
 export const ENGINE_ASK_URL =
@@ -11,15 +11,71 @@ export const ENGINE_ASK_URL =
 /** Hard cap for a single live payment, $0.05 in 6-decimal USDC units. */
 export const MAX_AMOUNT_PER_PAYMENT = "50000";
 
+const UNPAID_TIMEOUT_MS = Number(process.env.TELEGRAPH_UNPAID_TIMEOUT_MS || 20000);
+const PAID_TIMEOUT_MS = Number(process.env.TELEGRAPH_PAID_TIMEOUT_MS || 90000);
+
+/** Prefer Ethereum Sepolia exact test USDC so settlement lands on the Diamond. */
+export function selectSepoliaExactUsdc(_x402Version, accepts = []) {
+  const hit = accepts.find(
+    (item) =>
+      item?.scheme === "exact" &&
+      item?.network === SEPOLIA_CAIP &&
+      String(item?.asset || "").toLowerCase() === SEPOLIA_USDC.toLowerCase(),
+  );
+  if (!hit) {
+    throw new Error("no Ethereum Sepolia exact USDC option in the 402 challenge");
+  }
+  return hit;
+}
+
+export function decodePaymentRequired(res) {
+  const raw = res?.headers?.get?.("PAYMENT-REQUIRED") || res?.headers?.get?.("payment-required");
+  if (!raw) return null;
+  try {
+    return JSON.parse(Buffer.from(raw, "base64").toString("utf8"));
+  } catch {
+    return null;
+  }
+}
+
+function paymentHeaderSent(headers) {
+  return (
+    headers.has("PAYMENT-SIGNATURE") ||
+    headers.has("payment-signature") ||
+    headers.has("X-PAYMENT") ||
+    headers.has("x-payment")
+  );
+}
+
+async function fetchWithTimeout(fetchImpl, request, timeoutMs) {
+  const ctrl = AbortSignal.timeout(timeoutMs);
+  const signal =
+    request.signal && !request.signal.aborted ? AbortSignal.any([request.signal, ctrl]) : ctrl;
+  const paid = paymentHeaderSent(request.headers);
+  const t0 = Date.now();
+  const res = await fetchImpl(new Request(request, { signal }));
+  const ms = Date.now() - t0;
+  console.log(JSON.stringify({ hop: "x402", status: res.status, ms, paidHeaderSent: paid }));
+  return res;
+}
+
 /**
  * Wallet-signed x402 exact payments on Ethereum Sepolia.
  * The payer signs EIP-3009 TransferWithAuthorization; the facilitator settles.
+ *
+ * Implemented as an explicit 402-then-retry so we can time each hop and
+ * surface a verify failure instead of a bare "payment required".
  */
 export function createPaidFetch({ getPrivateKey, maxAmountPerPayment = MAX_AMOUNT_PER_PAYMENT, fetchImpl = fetch }) {
   if (typeof getPrivateKey !== "function") throw new Error("getPrivateKey is required");
   const account = privateKeyToAccount(getPrivateKey());
-  return wrapFetchWithPaymentFromConfig(fetchImpl, {
-    schemes: [{ network: SEPOLIA_CAIP, client: new ExactEvmScheme(account) }],
+  const client = x402Client.fromConfig({
+    schemes: [
+      {
+        network: SEPOLIA_CAIP,
+        client: new ExactEvmScheme(account, { rpcUrl: SEPOLIA_RPC }),
+      },
+    ],
     spendControls: {
       allowedAssets: [
         {
@@ -29,7 +85,54 @@ export function createPaidFetch({ getPrivateKey, maxAmountPerPayment = MAX_AMOUN
         },
       ],
     },
+    paymentRequirementsSelector: selectSepoliaExactUsdc,
   });
+  const httpClient = new x402HTTPClient(client);
+
+  return async (input, init) => {
+    const request = new Request(input, init);
+    const retryBase = request.clone();
+    const first = await fetchWithTimeout(fetchImpl, request, UNPAID_TIMEOUT_MS);
+    if (first.status !== 402) return first;
+
+    const firstText = await first.text();
+    let firstBody;
+    try {
+      firstBody = firstText ? JSON.parse(firstText) : undefined;
+    } catch {
+      firstBody = undefined;
+    }
+    const paymentRequired = httpClient.getPaymentRequiredResponse(
+      (name) => first.headers.get(name),
+      firstBody,
+    );
+    const maxPaidAttempts = Math.max(1, Number(process.env.TELEGRAPH_X402_SETTLE_RETRIES || 1));
+    let last = first;
+    for (let attempt = 1; attempt <= maxPaidAttempts; attempt += 1) {
+      const paymentPayload = await client.createPaymentPayload(paymentRequired);
+      const paymentHeaders = httpClient.encodePaymentSignatureHeader(paymentPayload);
+      const retry = retryBase.clone();
+      for (const [key, value] of Object.entries(paymentHeaders)) {
+        retry.headers.set(key, value);
+      }
+      last = await fetchWithTimeout(fetchImpl, retry, PAID_TIMEOUT_MS);
+      if (last.status !== 402) return last;
+      const text = await last.clone().text();
+      let body;
+      try { body = text ? JSON.parse(text) : {}; } catch { body = {}; }
+      const reason = String(body.reason || body.hint || "");
+      const settleTimeout = /deadline exceeded|could not be settled|settlement failed/i.test(reason);
+      console.log(JSON.stringify({
+        hop: "x402-settle",
+        attempt,
+        status: last.status,
+        reason: body.reason || null,
+        retrying: settleTimeout && attempt < maxPaidAttempts,
+      }));
+      if (!settleTimeout) return last;
+    }
+    return last;
+  };
 }
 
 export class X402EngineClient {
@@ -91,14 +194,25 @@ export class X402EngineClient {
       }
     }
     const receipt = parseTelegraphReceipt(res);
+    const paymentRequired = decodePaymentRequired(res);
     const paymentResponsePresent = Boolean(
       res.headers.get("PAYMENT-RESPONSE") || res.headers.get("payment-response"),
     );
     if (!res.ok) {
-      const err = new Error(parsed.message || parsed.error || `engine HTTP ${res.status}`);
+      const reason =
+        parsed.reason ||
+        parsed.hint ||
+        parsed.message ||
+        (paymentRequired?.error && paymentRequired.error !== "Payment required" && paymentRequired.error !== "payment required"
+          ? paymentRequired.error
+          : null) ||
+        parsed.error ||
+        `engine HTTP ${res.status}`;
+      const err = new Error(reason);
       err.status = res.status;
       err.body = redact(parsed);
       err.receipt = receipt;
+      err.paymentRequiredError = paymentRequired?.error || null;
       throw err;
     }
     const cost = Number(parsed.cost_usd ?? parsed.costUsd ?? 0.01) || 0.01;

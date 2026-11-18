@@ -27,9 +27,9 @@ describe("considerPayment", () => {
     assert.equal(allowed.gas.result.gas_price_gwei, 1.2);
 
     const denied = await considerPayment(client, ledger, {
-      payeeName: "Blocked Entity Example",
-      subject: "Blocked Entity Example",
-      transaction: "pay-blocked-001",
+      payeeName: "Flagged Vendor GmbH",
+      subject: "Flagged Vendor GmbH",
+      transaction: "pay-flagged-001",
       category: "intelligence",
       task: "screen-and-pay-vendor",
       amountUsdc: 5,

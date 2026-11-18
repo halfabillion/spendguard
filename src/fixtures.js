@@ -42,6 +42,26 @@ export function demoFixtures() {
     signals: [],
     summary: "No fraud signals (fixture).",
   });
+  add(INTENTS.sanctions, { name: "Flagged Vendor GmbH" }, {
+    name: "Flagged Vendor GmbH",
+    matched: true,
+    matches: ["Example SDN entry (fixture)"],
+    lists: ["OFAC SDN"],
+    match_score: 0.98,
+  });
+  add(INTENTS.transactionRisk, { transaction: "pay-flagged-001" }, {
+    risk_level: "MEDIUM",
+    risk_score: 0.4,
+    signals: ["sanctions_name_overlap"],
+    summary: "Name overlaps a sanctions fixture; wait for sanctions result.",
+  });
+  add(INTENTS.fraudRisk, { subject: "Flagged Vendor GmbH" }, {
+    risk_level: "MEDIUM",
+    risk_score: 0.35,
+    signals: ["watchlist_name"],
+    summary: "Watchlist overlap (fixture).",
+  });
+
   add(INTENTS.fraudRisk, { subject: "Blocked Entity Example" }, {
     risk_level: "MEDIUM",
     risk_score: 0.35,
