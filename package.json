@@ -1,0 +1,14 @@
+{
+  "name": "spendguard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pre-settlement compliance gate and agent expense ledger for Telegraph Hackathon Season II (Stablecoin mission).",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "demo": "node src/cli.js demo",
+    "summary": "node src/cli.js summary"
+  },
+  "license": "MIT"
+}
