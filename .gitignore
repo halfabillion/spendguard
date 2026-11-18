@@ -7,3 +7,5 @@ node_modules/
 coverage/
 .ledger.json
 .DS_Store
+*.key
+evidence/*.raw.json

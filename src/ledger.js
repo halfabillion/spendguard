@@ -25,6 +25,8 @@ export class ExpenseLedger {
       proof: entry.proof || null,
       gas: entry.gas || null,
       quality: entry.quality || null,
+      receipts: entry.receipts || collectReceipts(entry.proof, entry.gas),
+      rail: entry.rail || null,
     };
     if (!row.status) throw new Error("ledger entry needs status");
     if (!row.category) throw new Error("ledger entry needs category");
@@ -41,7 +43,7 @@ export class ExpenseLedger {
     const costByTask = {};
     for (const e of settled) {
       const burn = e.amountUsdc + e.intelligenceCostUsd;
-      burnByCategory[e.category] = round( (burnByCategory[e.category] || 0) + burn );
+      burnByCategory[e.category] = round((burnByCategory[e.category] || 0) + burn);
       if (!costByTask[e.task]) costByTask[e.task] = { tasks: 0, total: 0 };
       costByTask[e.task].tasks += 1;
       costByTask[e.task].total = round(costByTask[e.task].total + burn);
@@ -69,6 +71,30 @@ export class ExpenseLedger {
       JSON.stringify({ entries: this.entries, summary: this.summary() }, null, 2),
     );
   }
+}
+
+export function collectReceipts(...bundles) {
+  const out = [];
+  const walk = (v) => {
+    if (!v || typeof v !== "object") return;
+    if (v.receipt || v.signal_hash || v.jobId || v.tx_hash) {
+      const r = v.receipt || {};
+      out.push({
+        rail: v.rail || r.rail || null,
+        receipt_hash: r.receipt_hash || null,
+        tx_hash: r.tx_hash || v.tx_hash || null,
+        signal_hash: v.signal_hash || null,
+        jobId: v.jobId || null,
+        cost_usd: v.cost_usd ?? r.amount_uusdc ?? null,
+        payer: r.payer || null,
+      });
+    }
+    for (const child of Object.values(v)) {
+      if (child && typeof child === "object" && child !== v.receipt) walk(child);
+    }
+  };
+  for (const b of bundles) walk(b);
+  return out;
 }
 
 function round(n) {

@@ -4,11 +4,19 @@
   "private": true,
   "description": "Pre-settlement compliance gate and agent expense ledger for Telegraph Hackathon Season II (Stablecoin mission).",
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "test": "node --test test/*.test.js",
     "demo": "node src/cli.js demo",
-    "summary": "node src/cli.js summary"
+    "summary": "node src/cli.js summary",
+    "live-once": "node src/cli.js live-once"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@x402/evm": "^2.31.0",
+    "@x402/fetch": "^2.31.0",
+    "viem": "^2.58.0"
+  }
 }

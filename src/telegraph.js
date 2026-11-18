@@ -1,33 +1,36 @@
 import { ENGINE_URL, USDC_PER_MINER } from "./intents.js";
 
 /**
- * Telegraph Engine client.
+ * Telegraph client.
  *
- * mock (default): returns fixture intelligence, no network.
- * live: will POST to the Engine, but this first commit refuses to attach a
- * payment, so a 402 is surfaced rather than spent. That keeps tests and the
- * demo off-chain until a throwaway key and faucet route are approved.
+ * mode=mock (default): fixture answers, no network.
+ * mode=live + payPath=key: Anjoman API-key escrow path (injected AnjomanKeyClient).
+ * mode=live + payPath=x402: wallet-signed x402 exact (injected X402EngineClient).
  */
 export class TelegraphClient {
-  constructor({ mode = "mock", fixtures = {}, engineUrl = ENGINE_URL } = {}) {
+  constructor({
+    mode = "mock",
+    payPath = null,
+    fixtures = {},
+    engineUrl = ENGINE_URL,
+    inner = null,
+  } = {}) {
     this.mode = mode;
+    this.payPath = payPath || (mode === "live" ? "x402" : null);
     this.fixtures = fixtures;
     this.engineUrl = engineUrl;
+    this.inner = inner;
     this.calls = [];
   }
 
-  async ask({ intent, params = {}, query, maxBudgetUsdc = USDC_PER_MINER } = {}) {
-    if (!intent && !query) {
+  async ask({ intent, params = {}, query, maxBudgetUsdc = USDC_PER_MINER, maxSpendUsd, message } = {}) {
+    if (!intent && !query && !message) {
       throw new Error("send query, or intent and params");
     }
-    const request = { intent, params, query, max_budget_usdc: maxBudgetUsdc };
+    const request = { intent, params, query, max_budget_usdc: maxBudgetUsdc, maxSpendUsd, message };
     this.calls.push(request);
-    if (this.mode === "mock") {
-      return this.#mockAnswer(request);
-    }
-    if (this.mode === "live") {
-      return this.#liveUnpaid(request);
-    }
+    if (this.mode === "mock") return this.#mockAnswer(request);
+    if (this.mode === "live") return this.#liveAsk(request);
     throw new Error(`unknown TELEGRAPH_MODE: ${this.mode}`);
   }
 
@@ -48,37 +51,16 @@ export class TelegraphClient {
       cost_usd: fixture.cost_usd ?? 0.01,
       signal_hash: fixture.signal_hash || `mock-${key}`,
       network: "mock",
+      rail: "mock",
       paid: false,
     };
   }
 
-  async #liveUnpaid(request) {
-    const res = await fetch(this.engineUrl, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        intent: request.intent,
-        params: request.params,
-        ...(request.query ? { query: request.query } : {}),
-        max_budget_usdc: request.max_budget_usdc,
-      }),
-    });
-    const body = await res.json().catch(() => ({}));
-    if (res.status === 402) {
-      const err = new Error("payment required");
-      err.code = "PAYMENT_REQUIRED";
-      err.status = 402;
-      err.accepts = body.accepts || [];
-      err.body = body;
-      throw err;
+  async #liveAsk(request) {
+    if (!this.inner || typeof this.inner.ask !== "function") {
+      throw new Error(`live mode (${this.payPath}) needs an inner client`);
     }
-    if (!res.ok) {
-      const err = new Error(body.message || body.error || `engine HTTP ${res.status}`);
-      err.status = res.status;
-      err.body = body;
-      throw err;
-    }
-    return { ...body, network: "live", paid: false };
+    return this.inner.ask(request);
   }
 }
 

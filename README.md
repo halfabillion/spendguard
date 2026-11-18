@@ -21,7 +21,14 @@ Requires Node 20+. No other dependencies.
 2. A proposed payment to a **sanctioned** fixture is screened, **blocked**, and recorded as a denied attempt. No settlement.
 3. The summary prints burn by category, cost per completed task, settlement count, and blocked count.
 
-Replace the fixtures with live `POST /engine/v1/ask` calls only when `TELEGRAPH_MODE=live` is set, a throwaway testnet key exists, and a spend cap is configured. Live mode is not wired to sign payments in this first commit (it will refuse), so default tests cannot accidentally spend.
+Live mode is behind feature flags and is **off by default**. Tests always use the mock client.
+
+```bash
+TELEGRAPH_MODE=live TELEGRAPH_PAY=x402 node src/cli.js live-once
+```
+
+`TELEGRAPH_PAY=x402` (default for live-once) signs an EIP-3009 x402 payment from the throwaway Sepolia EOA (key loaded from `../.secrets/sepolia-eoa.key`, never printed). `TELEGRAPH_PAY=key` uses the Anjoman API-key path when `../.secrets/anjoman_api_key` exists. Each live call is capped at $0.05 (`maxAmountPerPayment` 50000 units, or `maxSpendUsd` on the key path). See `docs/PAYMENT_PATH.md`.
+
 
 ## Live Intent IDs
 
