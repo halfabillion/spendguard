@@ -2,7 +2,7 @@
 
 A **pre-settlement compliance gate** and **agent expense ledger** for machine stablecoin payments. It buys ranked intelligence through Telegraph, attaches the verified result to the payment as a proof, and records burn per category and cost per completed task.
 
-Built for [Telegraph Hackathon Season II](https://hackathon.telegraphprotocol.com/), Apps & Agents track, [Mission 02 Stablecoin](https://hackathon.telegraphprotocol.com/missions/stablecoin). Local, private, not submitted.
+Built for [Telegraph Hackathon Season II](https://hackathon.telegraphprotocol.com/), Apps & Agents track, [Mission 02 Stablecoin](https://hackathon.telegraphprotocol.com/missions/stablecoin). Source: [github.com/halfabillion/spendguard](https://github.com/halfabillion/spendguard). The official H2 form has not been submitted yet. Ready-to-paste field answers are in [`submit/SUBMISSION_FIELDS.md`](submit/SUBMISSION_FIELDS.md).
 
 This is a **testnet** project (Ethereum Sepolia + Telegraph escrow). Default commands use a mock client and need no wallet, faucet, or network. The default **live** rail is Diamond **escrow** (`TELEGRAPH_PAY=key`). Wallet-signed x402 is kept as an optional experimental flag; the official facilitator `/settle` timed out on 18 Nov 2026 and nothing settled.
 
@@ -94,4 +94,4 @@ Built with AI coding assistance. All tests, the mock demo, and the three evidenc
 
 ## Holds
 
-Do not publish this repo, star `telegraphprotocol/bounties`, create an Anjoman account, hit a login faucet, move funds on Ali's wallets, post on X, or submit the entry, without Ali's own OK. Do not make a new paid Telegraph call or escrow top-up without an explicit spend approval.
+This repository is public. Do not star `telegraphprotocol/bounties`, create an Anjoman account, hit a login faucet, move funds on Ali's wallets, post on X, or submit the official H2 form, without Ali's own OK. Do not make a new paid Telegraph call or escrow top-up without an explicit spend approval.
