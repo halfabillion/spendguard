@@ -1,0 +1,20 @@
+{
+  "case": "spend-limit",
+  "at": "2026-11-19T11:42:41.572Z",
+  "sessionCapUsd": 0.005,
+  "attemptedUsd": 0.01,
+  "blocked": true,
+  "error": {
+    "code": "SPEND_CAP",
+    "message": "session spend cap would be exceeded",
+    "sessionCapUsd": 0.005,
+    "attemptedUsd": 0.01,
+    "remainingCapUsd": 0.005,
+    "spentUsd": 0
+  },
+  "telegraphCalls": 0,
+  "spentUsd": 0,
+  "keyLoads": 0,
+  "telegraphFetches": 0,
+  "note": "Session cap $0.005 is below the $0.01 minimum call price, so the gate refused the ask before any engine request, signature, or spend."
+}

@@ -1,0 +1,19 @@
+{
+  "case": "deny",
+  "at": "2026-11-19T11:42:41.572Z",
+  "payeeName": "Blocked Entity Example",
+  "decision": "deny",
+  "settled": false,
+  "reasons": [
+    "local_denylist"
+  ],
+  "skippedPurchase": true,
+  "intelligenceCostUsd": 0,
+  "vendorAmountUsdc": 0,
+  "telegraphCalls": 0,
+  "innerCalls": 0,
+  "spentUsd": 0,
+  "keyLoads": 0,
+  "telegraphFetches": 0,
+  "note": "Local denylist blocked the payee before any Telegraph request or key load. $0 spent."
+}

@@ -1,0 +1,83 @@
+{
+  "case": "allow",
+  "at": "2026-11-19T11:42:42.645Z",
+  "rail": "escrow",
+  "decision": "allow",
+  "reusedExistingReceipt": true,
+  "newSpend": false,
+  "topUp": false,
+  "payeeName": "Circle Internet Financial",
+  "intent": "SANCTIONS_SCREENING_MATCH_GENERAL",
+  "receipt_hash": "0x99ca220ae205c17f0f349d431116b1054957c19b0dd71da110bbdcb6553bfbf8",
+  "epoch_id": 15,
+  "amount_uusdc": "10000",
+  "cost_usd": 0.01,
+  "signal_hash": "0x42c6a1ebf6410e24ac43fc09c8392f8dea2cd4c24623422d787edd2ab1ffde57",
+  "miner_id": "302",
+  "miner_name": "ChainSight — Universal Intelligence & Data Oracle",
+  "result": {
+    "name": "Circle Internet Financial",
+    "matched": false,
+    "matches": null,
+    "lists": [
+      "OFAC SDN"
+    ],
+    "match_score": null
+  },
+  "receipt": {
+    "receipt_hash": "0x99ca220ae205c17f0f349d431116b1054957c19b0dd71da110bbdcb6553bfbf8",
+    "rail": "escrow",
+    "payer": "0xc11fbcbe43baf505f37dd6b95054c5eb380a9965",
+    "miner": "6119",
+    "intent": "SANCTIONS_SCREENING_MATCH_GENERAL",
+    "amount_uusdc": "10000",
+    "epoch_id": 15,
+    "settlement": "epoch",
+    "chain": "telegraph",
+    "timestamp": 1795077294
+  },
+  "epochInclusion": {
+    "checkedAt": "2026-11-19T10:36:13.801521+00:00",
+    "block_window": [
+      "2026-11-19T06:06:31Z",
+      "2026-11-19T09:06:31Z"
+    ],
+    "block_delivery_count": 67,
+    "deliveries_root": "0x3451588df8a5f0a9a7c91f60181eab633b9343ee0dff8256798528b409dce093",
+    "merkle_proof": [
+      "0xf112617944fde84bb73e7f51a5c5f6091800f0ce4aa4839cd85049998d016cb2",
+      "0x5c27a04ecf11ddebe2f8b697f6ad38ba98091c7293558be597c9cddb67586df7",
+      "0xefd5e0d24db12a6ec83197f90b152558c8fe918058056e6ceeef79769e70eab5",
+      "0x963495306b8376f6de9ae460810170f60d8d6b46a010dd914b035a6dba05ee56",
+      "0x526de41453ba7f8d45ea03aeb0af5699d56be911f0db0dbb290a8d56a2372254",
+      "0xe8665f2e9a8e1d32e8d9ac393420f6abfb1598e13ca18a5fa3f49a4683690a07",
+      "0x44911b247787dd0190f8c43e158735a9395c28f700cc37f239db7f610aa9d293"
+    ],
+    "delivery": {
+      "receipt_hash": "0x99ca220ae205c17f0f349d431116b1054957c19b0dd71da110bbdcb6553bfbf8",
+      "payer": "0xc11fbcbe43baf505f37dd6b95054c5eb380a9965",
+      "miner_id": "6119",
+      "intent": "SANCTIONS_SCREENING_MATCH_GENERAL",
+      "usdc": 10000,
+      "class": "paid_consumer",
+      "ranking_round": 11
+    }
+  },
+  "payer": "0xC11FBCbE43baF505F37dD6B95054C5eB380A9965",
+  "diamond": "0x72a70e949362670Bf8bceAd24eFC5b8f950aa08b",
+  "liveLedger": {
+    "status": 200,
+    "available": "990000",
+    "balance": "990000",
+    "charged": "10000",
+    "deposited": "1000000",
+    "epoch_id": 15
+  },
+  "liveLedgerError": null,
+  "escrowCoversAnotherCall": true,
+  "sources": [
+    "evidence/escrow-live-ask.json",
+    "evidence/escrow-receipt-epoch15.json"
+  ],
+  "note": "Allow evidence is the already-confirmed epoch 15 escrow receipt 0x99ca…fbf8 (10000 uUSDC / $0.01 test USDC). No new paid call and no top-up were made. A further $0.01 call would be covered by the remaining escrow balance, but it was not sent because this update forbids new spend."
+}

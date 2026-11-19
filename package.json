@@ -11,7 +11,8 @@
     "test": "node --test test/*.test.js",
     "demo": "node src/cli.js demo",
     "summary": "node src/cli.js summary",
-    "live-once": "node src/cli.js live-once"
+    "live-once": "node src/cli.js live-once",
+    "cases": "node src/cli.js cases"
   },
   "license": "MIT",
   "dependencies": {

@@ -4,8 +4,9 @@ import { ENGINE_URL, USDC_PER_MINER } from "./intents.js";
  * Telegraph client.
  *
  * mode=mock (default): fixture answers, no network.
- * mode=live + payPath=key: Anjoman API-key escrow path (injected AnjomanKeyClient).
- * mode=live + payPath=x402: wallet-signed x402 exact (injected X402EngineClient).
+ * mode=live + payPath=key (default): Diamond escrow rail (injected EscrowEngineClient).
+ * mode=live + payPath=anjoman: Anjoman API-key path (injected AnjomanKeyClient).
+ * mode=live + payPath=x402: experimental wallet-signed x402 exact (injected X402EngineClient).
  */
 export class TelegraphClient {
   constructor({
@@ -16,7 +17,7 @@ export class TelegraphClient {
     inner = null,
   } = {}) {
     this.mode = mode;
-    this.payPath = payPath || (mode === "live" ? "x402" : null);
+    this.payPath = payPath || (mode === "live" ? "key" : null);
     this.fixtures = fixtures;
     this.engineUrl = engineUrl;
     this.inner = inner;
