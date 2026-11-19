@@ -1,0 +1,96 @@
+{
+ "at": "2026-11-19T08:34:00.284Z",
+ "rail": "escrow",
+ "payer": "0xC11FBCbE43baF505F37dD6B95054C5eB380A9965",
+ "ledgerBefore": {
+  "status": 200,
+  "body": {
+   "active_root": {
+    "balance": "0",
+    "charged": "0",
+    "credited": "0",
+    "cutoff": 1795068384,
+    "epoch_id": 14,
+    "seq": 14
+   },
+   "address": "0xc11fbcbe43baf505f37dd6b95054c5eb380a9965",
+   "available": "0",
+   "balance": "0",
+   "charge_limit": "1000000000",
+   "charged": "0",
+   "charged_this_block": "0",
+   "credited": "0",
+   "deposited": "0",
+   "request": {
+    "status": "none"
+   },
+   "unbilled": "0",
+   "withdrawn": "0"
+  }
+ },
+ "deposit": {
+  "approveTx": "0x58177298a1fccf0ec1547d9524971f549d711216e1694d013caa8c1057287a18",
+  "approveStatus": "success",
+  "approveBlock": "12167292",
+  "depositTx": "0x71271c4c7c2072d1b4c23db0bee7025dca0f3abf6ee51a20df19efe17475dc13",
+  "depositStatus": "success",
+  "depositBlock": "12167293"
+ },
+ "ledgerAfterDeposit": {
+  "status": 200,
+  "body": {
+   "active_root": {
+    "balance": "1000000",
+    "charged": "0",
+    "credited": "0",
+    "cutoff": 1795068384,
+    "epoch_id": 14,
+    "seq": 14
+   },
+   "address": "0xc11fbcbe43baf505f37dd6b95054c5eb380a9965",
+   "available": "1000000",
+   "balance": "1000000",
+   "charge_limit": "1000000000",
+   "charged": "0",
+   "charged_this_block": "0",
+   "credited": "0",
+   "deposited": "1000000",
+   "request": {
+    "status": "none"
+   },
+   "unbilled": "0",
+   "withdrawn": "0"
+  }
+ },
+ "ask": {
+  "stage": "challenge",
+  "status": 400,
+  "body": "{\"error\":\"invalid request body\"}"
+ },
+ "ledgerAfterAsk": {
+  "status": 200,
+  "body": {
+   "active_root": {
+    "balance": "1000000",
+    "charged": "0",
+    "credited": "0",
+    "cutoff": 1795068384,
+    "epoch_id": 14,
+    "seq": 14
+   },
+   "address": "0xc11fbcbe43baf505f37dd6b95054c5eb380a9965",
+   "available": "1000000",
+   "balance": "1000000",
+   "charge_limit": "1000000000",
+   "charged": "0",
+   "charged_this_block": "0",
+   "credited": "0",
+   "deposited": "1000000",
+   "request": {
+    "status": "none"
+   },
+   "unbilled": "0",
+   "withdrawn": "0"
+  }
+ }
+}

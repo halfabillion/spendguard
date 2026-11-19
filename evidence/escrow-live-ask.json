@@ -1,0 +1,103 @@
+{
+ "at": "2026-11-19T08:34:41.448Z",
+ "rail": "escrow",
+ "payer": "0xC11FBCbE43baF505F37dD6B95054C5eB380A9965",
+ "ledgerBefore": {
+  "status": 200,
+  "body": {
+   "active_root": {
+    "balance": "1000000",
+    "charged": "0",
+    "credited": "0",
+    "cutoff": 1795068384,
+    "epoch_id": 14,
+    "seq": 14
+   },
+   "address": "0xc11fbcbe43baf505f37dd6b95054c5eb380a9965",
+   "available": "1000000",
+   "balance": "1000000",
+   "charge_limit": "1000000000",
+   "charged": "0",
+   "charged_this_block": "0",
+   "credited": "0",
+   "deposited": "1000000",
+   "request": {
+    "status": "none"
+   },
+   "unbilled": "0",
+   "withdrawn": "0"
+  }
+ },
+ "deposit": null,
+ "ledgerAfterDeposit": {
+  "status": 200,
+  "body": {
+   "active_root": {
+    "balance": "1000000",
+    "charged": "0",
+    "credited": "0",
+    "cutoff": 1795068384,
+    "epoch_id": 14,
+    "seq": 14
+   },
+   "address": "0xc11fbcbe43baf505f37dd6b95054c5eb380a9965",
+   "available": "1000000",
+   "balance": "1000000",
+   "charge_limit": "1000000000",
+   "charged": "0",
+   "charged_this_block": "0",
+   "credited": "0",
+   "deposited": "1000000",
+   "request": {
+    "status": "none"
+   },
+   "unbilled": "0",
+   "withdrawn": "0"
+  }
+ },
+ "ask": {
+  "stage": "paid",
+  "status": 200,
+  "quotedValue": "10000",
+  "nonce": "00aecbb4-34da-4068-9c0f-b9b575baad31",
+  "receipt": {
+   "receipt_hash": "0x99ca220ae205c17f0f349d431116b1054957c19b0dd71da110bbdcb6553bfbf8",
+   "rail": "escrow",
+   "payer": "0xc11fbcbe43baf505f37dd6b95054c5eb380a9965",
+   "miner": "6119",
+   "intent": "SANCTIONS_SCREENING_MATCH_GENERAL",
+   "amount_uusdc": "10000",
+   "epoch_id": 15,
+   "settlement": "epoch",
+   "chain": "telegraph",
+   "timestamp": 1795077294
+  },
+  "body": "{\"miner_id\":\"302\",\"miner_name\":\"ChainSight — Universal Intelligence \\u0026 Data Oracle\",\"endpoint\":\"/sanctions\",\"result\":{\"name\":\"Circle Internet Financial\",\"matched\":false,\"matches\":null,\"lists\":[\"OFAC SDN\"],\"match_score\":null},\"result_shape\":\"intent\",\"format_version\":3,\"field_status\":{\"name\":\"ok\",\"matched\":\"ok\",\"matches\":\"missing\",\"lists\":\"ok\",\"match_score\":\"missing\"},\"input\":{\"name\":\"Circle Internet Financial\"},\"input_schema_version\":3,\"cost_usd\":0.01,\"duration_ms\":6322,\"timestamp\":\"2026-11-19T08:34:51.672826857Z\",\"reasoning\":\"Intent: intent given by the caller\\nMiner: The user is asking to screen an entity against sanctions lists, which directly matches the SANCTIONS_SCREENING_MATCH_GENERAL intent. The ChainSight miner's /sanctions endpoint is described as serving this intent and requires a 'query' parameter for the input entity name. The provided parameter 'name' from the \\u003cPARAMS\\u003e tag is mapped to the 'query' field in the request body.\",\"intent\":\"SANCTIONS_SCREENING_MATCH_GENERAL\",\"intent_version\":1,\"signal_hash\":\"0x42c6a1ebf6410e24ac43fc09c8392f8dea2cd4c24623422d787edd2ab1ffde57\",\"warnings\":[\"The response does not include: Best fuzzy-match score, 0 to 1\",\"The response does not include: Matching sanctions-list entries\"],\"payments\":[{\"miner\":\"chainsight-oracle\",\"intent\":\"SANCTIONS_SCREENING_MATCH_GENERAL\",\"amount_uusdc\":10000,\"receipt_hash\":\"0x99ca220ae205c17f0f349d431116b1054957c19b0dd71da110bbdcb6553bfbf8\"}],\"cost_usd_total\":0.01,\"delivery\":\"specialist\",\"served_rank\":1,\"sources\":[{\"miner\":\"chainsight-oracle\",\"intent\":\"SANCTIONS_SCREENING_MATCH_GENERAL\"}],\"findings\":{\"items\":[{\"basis\":\"provider_reported\",\"delivery\":\"specialist\",\"evidence\":\"No match for \\\"Circle Internet Financial\\\" was found on the U.S. Treasury OFAC Specially Designated Nationals (SDN) list, the primary U.S. sanctions list. Based on this screening \\\"Circle Internet Financial\\\" does not appear to be a currently O...\",\"name\":\"answer\",\"path\":\"$.answer\",\"type\":\"string\",\"value\":\"No match for \\\"Circle Internet Financial\\\" was found on the U.S. Treasury OFAC Specially Designated Nationals (SDN) list, the primary U.S. sanctions list. Based on this screening \\\"Circle Internet Financial\\\" does not appear to be a currently OFAC-designated party; this screening covers the OFAC SDN list and not every global watchlist.\"},{\"basis\":\"provider_reported\",\"delivery\":\"specialist\",\"evidence\":\"Circle Internet Financial\",\"name\":\"entity\",\"path\":\"$.entity\",\"type\":\"string\",\"value\":\"Circle Internet Financial\"},{\"basis\":\"provider_reported\",\"delivery\":\"specialist\",\"evidence\":\"false\",\"name\":\"match\",\"path\":\"$.match\",\"type\":\"bool\",\"value\":false},{\"basis\":\"provider_reported\",\"delivery\":\"specialist\",\"evidence\":\"No match for \\\"Circle Internet Financial\\\" was found on the U.S. Treasury OFAC Specially Designated Nationals (SDN) list, the primary U.S. sanctions list. Based on this screening \\\"Circle Internet Financial\\\" does not appear to be a currently O...\",\"name\":\"signal\",\"path\":\"$.signal\",\"type\":\"string\",\"value\":\"No match for \\\"Circle Internet Financial\\\" was found on the U.S. Treasury OFAC Specially Designated Nationals (SDN) list, the primary U.S. sanctions list. Based on this screening \\\"Circle Internet Financial\\\" does not appear to be a currently OFAC-designated party; this screening covers the OFAC SDN list and not every global watchlist.\"},{\"basis\":\"provider_reported\",\"delivery\":\"specialist\",\"evidence\":\"ofac-sdn\",\"name\":\"source\",\"path\":\"$.source\",\"type\":\"string\",\"value\":\"ofac-sdn\"},{\"absence\":\"authoritative_absence\",\"basis\":\"provider_reported\",\"delivery\":\"specialist\",\"evidence\":\"{\\\"answer\\\":\\\"No match for \\\\\\\"Circle Internet Financial\\\\\\\" was found on the U. [a successful lookup against ofac reports no record]\",\"name\":\"record_exists\",\"path\":\"$\",\"type\":\"absence\",\"value\":false}],\"raw_sha256\":\"0ee38917fbb46884776729be16f089454cfedfd0c7b34658f405539c508d406c\"}}"
+ },
+ "ledgerAfterAsk": {
+  "status": 200,
+  "body": {
+   "active_root": {
+    "balance": "1000000",
+    "charged": "0",
+    "credited": "0",
+    "cutoff": 1795068384,
+    "epoch_id": 14,
+    "seq": 14
+   },
+   "address": "0xc11fbcbe43baf505f37dd6b95054c5eb380a9965",
+   "available": "990000",
+   "balance": "1000000",
+   "charge_limit": "1000000000",
+   "charged": "0",
+   "charged_this_block": "10000",
+   "credited": "0",
+   "deposited": "1000000",
+   "request": {
+    "status": "none"
+   },
+   "unbilled": "10000",
+   "withdrawn": "0"
+  }
+ }
+}

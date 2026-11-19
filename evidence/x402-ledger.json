@@ -53,12 +53,30 @@
       "quality": null,
       "receipts": [],
       "rail": null
+    },
+    {
+      "id": "e-4",
+      "at": "2026-11-19T08:31:43.058Z",
+      "status": "blocked",
+      "category": "intelligence",
+      "task": "pre-settle-screen",
+      "payeeName": "Blocked Entity Example",
+      "amountUsdc": 0,
+      "intelligenceCostUsd": 0,
+      "reasons": [
+        "local_denylist"
+      ],
+      "proof": {},
+      "gas": null,
+      "quality": null,
+      "receipts": [],
+      "rail": null
     }
   ],
   "summary": {
     "settlementCount": 0,
-    "blockedCount": 3,
-    "entryCount": 3,
+    "blockedCount": 4,
+    "entryCount": 4,
     "burnByCategory": {},
     "costPerTask": {},
     "totalSettledUsd": 0
