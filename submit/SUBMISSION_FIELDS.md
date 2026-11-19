@@ -41,12 +41,12 @@ A 2–5 minute video or accessible equivalent showing the real input, result, an
 | File in this repo | [`submit/video/spendguard-escrow-demo.mp4`](video/spendguard-escrow-demo.mp4) |
 | Direct URL (use this if the form asks for a video link) | https://raw.githubusercontent.com/halfabillion/spendguard/main/submit/video/spendguard-escrow-demo.mp4 |
 | GitHub preview | https://github.com/halfabillion/spendguard/blob/main/submit/video/spendguard-escrow-demo.mp4 |
-| Duration / format | About **100 seconds**, silent, on-screen captions, title and end cards, no voice |
-| What it shows | Allow (confirmed escrow purchase), deny (blocked payee, no spend), and spending-limit (cap stops a $0.01 ask before anything is signed) |
+| Duration / format | **179.600 seconds (2:59.6)**, silent, on-screen captions, title and end cards, no voice, 1280×720 h264 |
+| What it shows | The problem and the user; a code tour of the policy engine (denylist, cap, allow path); the three cases running (deny, cap, allow) with captions; the epoch-15 escrow receipt and its Merkle proof on screen; the architecture and how Telegraph escrow and its signal fit; end card with https://github.com/halfabillion/spendguard |
 
 **Hosting note.** The official rules do not name a required video host. If the form accepts a URL, paste the raw GitHub URL above (the mp4 is already in the public repo). If the form requires a YouTube, Loom, or Google Drive link, upload this same file there during the browser step and paste that URL instead. Do not re-encode unless the host rejects the file.
 
-**Duration note.** The recording is a little under the “2–5 minute” ask. It is a complete screen recording of the three judged cases and the Telegraph receipt, offered as an accessible equivalent. If the form or a reviewer wants a longer cut, extend the same captions rather than recording a new spend.
+The recording is **2:59.6**, inside the official 2–5 minute window. It is a silent captioned walkthrough of the problem, the policy engine, the three judged cases, the epoch-15 receipt and Merkle proof, and the escrow architecture. No new spend was made for this cut.
 
 Suggested official demo flow, covered in the video and the evidence files: Problem → Telegraph request → Intelligence and Provider evidence → Observed cost → Completed result → How to try it.
 

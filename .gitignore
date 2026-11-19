@@ -11,3 +11,5 @@ coverage/
 evidence/*.raw.json
 
 .scratch/
+
+__pycache__/

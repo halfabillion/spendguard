@@ -1,6 +1,6 @@
 {
   "case": "allow",
-  "at": "2026-11-19T11:42:42.645Z",
+  "at": "2026-11-19T15:07:09.224Z",
   "rail": "escrow",
   "decision": "allow",
   "reusedExistingReceipt": true,
@@ -71,7 +71,7 @@
     "balance": "990000",
     "charged": "10000",
     "deposited": "1000000",
-    "epoch_id": 15
+    "epoch_id": 16
   },
   "liveLedgerError": null,
   "escrowCoversAnotherCall": true,
